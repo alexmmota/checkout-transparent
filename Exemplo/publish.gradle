@@ -1,0 +1,68 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+//def localRepoURL = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
+
+repositories {
+    maven {
+        name = 'pagseguro'
+        url 'http://a1-integpagsegurof-s-pla1.host.intranet/nexus/content/repositories/Android/'
+        credentials {
+            username = "deployment"
+            password = "deployment"
+        }
+    }
+    maven {
+        name 'proxy'
+        url 'http://a1-integpagsegurof-s-pla1.host.intranet/nexus/content/groups/public/'
+    }
+    maven {
+        name 'local'
+        url 'file://' + new File(System.getProperty('user.home'), '/.m2/repository').absolutePath
+    }
+
+    maven {
+        name 'repository'
+        url 'file://' + new File(System.getProperty('user.home'), 'development/pagseguro/bibliotecas/bitbucket/librarys/repository').absolutePath
+    }
+}
+
+def repoName = project.repositories.local
+
+task publishLocal << {
+    println project.repositories.local.url
+    repoName = uploadArchives.repositories.mavenDeployer.repository(url: project.repositories.local.url)
+}
+publishLocal.finalizedBy 'uploadArchives'
+
+task publishRepository << {
+    repoName = uploadArchives.repositories.mavenDeployer.repository(url: project.repositories.repository.url)
+}
+publishRepository.finalizedBy 'uploadArchives'
+
+task publishNexus << {
+    repoName = uploadArchives.repositories.mavenDeployer.repository(url: project.repositories.pagseguro.url) {
+        authentication(userName: "deployment", password: "deployment")
+    }
+}
+publishNexus.finalizedBy 'uploadArchives'
+
+uploadArchives {
+    repositories {
+
+        mavenDeployer {
+
+            add repoName
+
+            pom.version = VERSION_NAME
+            pom.artifactId = POM_ARTIFACT_ID
+            pom.groupId = GROUP
+
+            pom.project {
+                name POM_NAME
+                packaging POM_PACKAGING
+                description POM_DESCRIPTION
+            }
+
+        }
+    }
+}
