@@ -25,16 +25,11 @@ import br.com.uol.pslibs.checkouttransparente.model.Product;
 
 public class ResumeFragment extends Fragment {
 
-////    private static final String SELLER_EMAIL = "vend001@jab.com.br";
-//    private static final String SELLER_EMAIL = "vendedorqa65@mverde.com";
-////    private static final String SELLER_TOKEN = "2507D8278A9D478D94327BABDDC2A573";
-//    private static final String SELLER_TOKEN = "0449DF0CD799473696E8DFEF8517F70A";
-
     //Configuração Seller
     /**
      * Seller Email
      */
-    private static final String SELLER_EMAIL = "r-henrique-guarato@bol.com.br";
+    private static final String SELLER_EMAIL = "<e-mail do vendedor>";
 
     /**
      * Seller Token
@@ -42,7 +37,7 @@ public class ResumeFragment extends Fragment {
      * www.pagseguro.com.br
      * -> Mais informações consulte a documentação.
      */
-    private static final String SELLER_TOKEN = "C4E791B1BAD248B29DA16E556F0B0F4D";
+    private static final String SELLER_TOKEN = "<token do vendedor>";
 
 
     public static final String MESSAGE = "MESSAGE";
